@@ -9,7 +9,14 @@ import {
   HemisphericLight,
   Nullable,
   AbstractMesh,
+  UtilityLayerRenderer,
+
 } from "@babylonjs/core";
+import {
+  GizmoManager,
+  RotationGizmo,
+} from "@babylonjs/core/Gizmos";
+
 
 export class BasicScene {
   scene: Scene;
@@ -60,13 +67,23 @@ export class BasicScene {
     box2.material = material;
     ground.material = secondMaterial
 
+    // create GizmoManager instance and set usePointerToAttachGizmos to true
+    const gizmoManager = new GizmoManager(scene);
+    gizmoManager.usePointerToAttachGizmos = true;
+
     scene.onPointerDown = (evt, pickResult) => {
       if (pickResult?.hit && pickResult.pickedMesh instanceof AbstractMesh) {
         this.selectMesh(pickResult.pickedMesh);
+
+        // create RotationGizmo instance and attach it to the selected mesh
+        const utilityLayer = new UtilityLayerRenderer(scene);
+        const rotationGizmo = new RotationGizmo(utilityLayer);
+        rotationGizmo.attachedMesh = this.selectedMesh;
       } else {
         this.unselectMesh();
       }
     };
+
     return scene;
   }
 
