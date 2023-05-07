@@ -24,6 +24,63 @@ export class BasicScene {
   selectionMaterial: StandardMaterial;
   unselectedMaterial: StandardMaterial;
   selectedMesh: Nullable<AbstractMesh> = null;
+  positionGizmo: Nullable<PositionGizmo> = null;
+  rotationGizmo: Nullable<RotationGizmo> = null;
+  scaleGizmo: Nullable<ScaleGizmo> = null;
+
+  enablePositionGizmo() {
+    this.disableGizmos();
+    if (this.selectedMesh) {
+      const utilityLayer = new UtilityLayerRenderer(this.scene);
+      this.positionGizmo = new PositionGizmo(utilityLayer);
+      this.positionGizmo.attachedMesh = this.selectedMesh;
+    }
+  }
+
+  enableRotationGizmo() {
+    this.disableGizmos();
+    if (this.selectedMesh) {
+      const utilityLayer = new UtilityLayerRenderer(this.scene);
+      this.rotationGizmo = new RotationGizmo(utilityLayer);
+      this.rotationGizmo.attachedMesh = this.selectedMesh;
+    }
+  }
+
+  enableScaleGizmo() {
+    this.disableGizmos();
+    if (this.selectedMesh) {
+      const utilityLayer = new UtilityLayerRenderer(this.scene);
+      this.scaleGizmo = new ScaleGizmo(utilityLayer);
+      this.scaleGizmo.attachedMesh = this.selectedMesh;
+    }
+  }
+
+  disablePositionGizmo() {
+    if (this.positionGizmo) {
+      this.positionGizmo.dispose();
+      this.positionGizmo = null;
+    }
+  }
+
+  disableRotationGizmo() {
+    if (this.rotationGizmo) {
+      this.rotationGizmo.dispose();
+      this.rotationGizmo = null;
+    }
+  }
+
+  disableScaleGizmo() {
+    if (this.scaleGizmo) {
+      this.scaleGizmo.dispose();
+      this.scaleGizmo = null;
+    }
+  }
+
+  disableGizmos() {
+    this.disablePositionGizmo();
+    this.disableRotationGizmo();
+    this.disableScaleGizmo();
+  }
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
@@ -55,7 +112,7 @@ export class BasicScene {
     const material = new StandardMaterial("box-material", scene);
     const secondMaterial = new StandardMaterial("box-material", scene);
     material.diffuseColor = Color3.Purple();
-    secondMaterial.diffuseColor = Color3.Black();
+    secondMaterial.diffuseColor = Color3.Blue();
     box.material = material;
     box2.material = material;
     ground.material = secondMaterial
@@ -98,8 +155,6 @@ export class BasicScene {
       translationGizmo.attachedMesh = mesh;
     }
   }
-
-
   unselectMesh() {
     if (this.selectedMesh) {
       this.selectedMesh.material = this.unselectedMaterial;
