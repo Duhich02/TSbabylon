@@ -29,8 +29,9 @@ export class BasicScene {
   scaleGizmo: Nullable<ScaleGizmo> = null;
 
   enablePositionGizmo() {
-    this.disableGizmos();
     if (this.selectedMesh) {
+      this.disableRotationGizmo();
+      this.disableScaleGizmo();
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       this.positionGizmo = new PositionGizmo(utilityLayer);
       this.positionGizmo.attachedMesh = this.selectedMesh;
@@ -38,8 +39,9 @@ export class BasicScene {
   }
 
   enableRotationGizmo() {
-    this.disableGizmos();
     if (this.selectedMesh) {
+      this.disablePositionGizmo();
+      this.disableScaleGizmo();
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       this.rotationGizmo = new RotationGizmo(utilityLayer);
       this.rotationGizmo.attachedMesh = this.selectedMesh;
@@ -47,13 +49,15 @@ export class BasicScene {
   }
 
   enableScaleGizmo() {
-    this.disableGizmos();
     if (this.selectedMesh) {
+      this.disablePositionGizmo();
+      this.disableRotationGizmo();
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       this.scaleGizmo = new ScaleGizmo(utilityLayer);
       this.scaleGizmo.attachedMesh = this.selectedMesh;
     }
   }
+
 
   disablePositionGizmo() {
     if (this.positionGizmo) {

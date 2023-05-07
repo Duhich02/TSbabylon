@@ -10,25 +10,6 @@
 
 <script setup lang="ts">
 import { BasicScene } from 'src/scenes/MyFirstScene';
-import {
-  Engine,
-  Scene,
-  FreeCamera,
-  Vector3,
-  MeshBuilder,
-  StandardMaterial,
-  Color3,
-  HemisphericLight,
-  Nullable,
-  AbstractMesh,
-  UtilityLayerRenderer,
-} from "@babylonjs/core";
-import {
-  GizmoManager,
-  RotationGizmo,
-  ScaleGizmo,
-  PositionGizmo,
-} from "@babylonjs/core/Gizmos";
 import {ref, watch} from 'vue';
 
 const radio = ref<string>("rotation");
