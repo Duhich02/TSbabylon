@@ -1,5 +1,5 @@
 <template>
-  <canvas width="1480" height="750" />
+  <canvas width="1000" height="500" />
   <Button style="position: absolute; top: 0; left: 0;"/>
 </template>
 

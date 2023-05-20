@@ -42,9 +42,16 @@ export class BasicScene {
     if (this.selectedMesh) {
       this.disablePositionGizmo();
       this.disableScaleGizmo();
+
+      const parentMesh = new AbstractMesh("rotationGizmoParent", this.scene);
+      parentMesh.scaling = new Vector3(1, 1, 1);
+
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       this.rotationGizmo = new RotationGizmo(utilityLayer);
-      this.rotationGizmo.attachedMesh = this.selectedMesh;
+      this.rotationGizmo.attachedMesh = parentMesh;
+      this.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = false; // Set this property to false
+
+      this.selectedMesh.setParent(parentMesh);
     }
   }
 
@@ -57,7 +64,6 @@ export class BasicScene {
       this.scaleGizmo.attachedMesh = this.selectedMesh;
     }
   }
-
 
   disablePositionGizmo() {
     if (this.positionGizmo) {
@@ -77,14 +83,26 @@ export class BasicScene {
     if (this.scaleGizmo) {
       this.scaleGizmo.dispose();
       this.scaleGizmo = null;
+      this.clearScaleGizmo(this.scaleGizmo); // Clear the scale gizmo
     }
   }
+
 
   disableGizmos() {
     this.disablePositionGizmo();
     this.disableRotationGizmo();
     this.disableScaleGizmo();
   }
+
+  clearScaleGizmo(gizmo: Nullable<ScaleGizmo>) {
+    if (gizmo !== null) {
+      if (gizmo.attachedMesh !== null) {
+        gizmo.attachedMesh = null;
+      }
+    }
+  }
+
+
   constructor(private canvas: HTMLCanvasElement) {
     this.engine = new Engine(this.canvas, true);
     this.scene = this.CreateScene();
@@ -102,29 +120,49 @@ export class BasicScene {
       this.scene.render();
     });
   }
+
   CreateScene(): Scene {
     const scene = new Scene(this.engine);
-    const camera = new FreeCamera("camera1", new Vector3(5, 5, -5), this.scene);
+    const camera = new FreeCamera(
+      "camera1",
+      new Vector3(5, 5, -5),
+      this.scene
+    );
     camera.attachControl(this.canvas, true);
-    const light = new HemisphericLight("light", new Vector3(0.0, 0.0, 1.0), this.scene);
+    const light = new HemisphericLight(
+      "light",
+      new Vector3(0.0, 0.0, 1.0),
+      this.scene
+    );
     light.intensity = 0.5;
-    const ground = MeshBuilder.CreateGround("ground", { width: 6, height: 4 }, this.scene);
+    const ground = MeshBuilder.CreateGround(
+      "ground",
+      { width: 16, height: 14 },
+      this.scene
+    );
     ground.position = new Vector3(0, -1, 0);
     const box = MeshBuilder.CreateBox("box", { size: 4 }, scene);
     box.position.z = 9;
-    const box2 = MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
+    const box2 = MeshBuilder.CreateSphere(
+      "sphere",
+      { diameter: 2 },
+      scene
+    );
     const material = new StandardMaterial("box-material", scene);
     const secondMaterial = new StandardMaterial("box-material", scene);
     material.diffuseColor = Color3.Purple();
     secondMaterial.diffuseColor = Color3.Blue();
     box.material = material;
     box2.material = material;
-    ground.material = secondMaterial
+    ground.material = secondMaterial;
     // create GizmoManager instance and set usePointerToAttachGizmos to true
     const gizmoManager = new GizmoManager(scene);
     gizmoManager.usePointerToAttachGizmos = true;
     scene.onPointerDown = (evt, pickResult) => {
-      if (pickResult?.hit && pickResult.pickedMesh instanceof AbstractMesh) {
+      if (
+        pickResult?.hit &&
+        pickResult.pickedMesh instanceof AbstractMesh
+      ) {
         this.selectMesh(pickResult.pickedMesh);
         // create RotationGizmo instance and attach it to the selected mesh
         const utilityLayerRotate = new UtilityLayerRenderer(scene);
@@ -140,6 +178,7 @@ export class BasicScene {
     };
     return scene;
   }
+
   selectMesh(mesh: AbstractMesh) {
     if (mesh.material !== this.selectionMaterial) {
       if (this.selectedMesh && this.selectedMesh !== mesh) {
@@ -159,10 +198,12 @@ export class BasicScene {
       translationGizmo.attachedMesh = mesh;
     }
   }
+
   unselectMesh() {
     if (this.selectedMesh) {
       this.selectedMesh.material = this.unselectedMaterial;
       this.selectedMesh = null;
+
     }
   }
 }
