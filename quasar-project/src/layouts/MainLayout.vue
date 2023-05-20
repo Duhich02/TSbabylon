@@ -1,102 +1,66 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <div class="q-pa-none">
+    <q-layout view="hHh Lpr lff" container style="height: 600px" class="shadow-2 rounded-borders">
+      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
+        <q-toolbar>
+          <q-btn flat @click="drawerLeft = !drawerLeft" round dense icon="menu" />
+          <q-toolbar-title>Header</q-toolbar-title>
+          <q-btn flat @click="drawerRight = !drawerRight" round dense icon="menu" />
+        </q-toolbar>
+      </q-header>
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+      <q-drawer
+        v-model="drawerLeft"
+        show-if-above
+        :width="200"
+        :breakpoint="700"
+        elevated
+        class="bg-primary text-white"
+      >
+        <q-scroll-area class="fit">
+          <div class="q-pa-sm">
+            <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
+          </div>
+        </q-scroll-area>
+      </q-drawer>
 
-        <div>Quasar v{{ $q.version }}</div>
-      </q-toolbar>
-    </q-header>
+      <q-drawer
+        side="right"
+        v-model="drawerRight"
+        show-if-above
+        bordered
+        :width="200"
+        :breakpoint="500"
+        :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+      >
+        <q-scroll-area class="fit">
+          <div class="q-pa-sm">
+            <div v-for="n in 50" :key="n">Drawer {{ n }} / 50</div>
+          </div>
+        </q-scroll-area>
+      </q-drawer>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view />
-    </q-page-container>
-  </q-layout>
+      <q-page-container>
+        <q-page padding>
+          <babylon-scene/>
+        </q-page>
+      </q-page-container>
+    </q-layout>
+  </div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
+<script>
+import { ref } from 'vue'
+import BabylonScene from "components/BabylonScene";
 
-const essentialLinks = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+
+export default {
+  components: {BabylonScene},
+  setup () {
+    return {
+      drawerLeft: ref(false),
+      drawerRight: ref(false)
+    }
   }
-];
-
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>

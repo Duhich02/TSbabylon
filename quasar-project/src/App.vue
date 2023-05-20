@@ -1,7 +1,10 @@
 <template>
-  <BabylonScreen/>
+<!--  <temp-page/>-->
+  <main-layout/>
+
 </template>
 
 <script setup>
-import BabylonScreen from "../../../TSbabylon/quasar-project/src/components/BabylonScene.vue"
+import TempPage from "src/pages/TempPage.vue"
+import MainLayout from "./layouts/MainLayout";
 </script>
