@@ -1,12 +1,10 @@
 <template>
-  <canvas width="1000" height="500" />
-<!--  <Button style="position: absolute; top: 0; left: 0;"/>-->
+  <canvas width="1050" height="500" />
 </template>
 
 <script setup>
 import { onMounted } from "@vue/runtime-core";
 import { BasicScene } from 'src/scenes/MyFirstScene.ts';
-// import Button from "src/components/Button.vue"
 
 onMounted(() => {
   const canvas = document.querySelector("canvas");

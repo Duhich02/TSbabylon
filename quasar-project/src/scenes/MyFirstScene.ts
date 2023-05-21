@@ -49,7 +49,7 @@ export class BasicScene {
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       this.rotationGizmo = new RotationGizmo(utilityLayer);
       this.rotationGizmo.attachedMesh = parentMesh;
-      this.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = false; // Set this property to false
+      this.rotationGizmo.updateGizmoRotationToMatchAttachedMesh = false;
 
       this.selectedMesh.setParent(parentMesh);
     }
@@ -83,7 +83,7 @@ export class BasicScene {
     if (this.scaleGizmo) {
       this.scaleGizmo.dispose();
       this.scaleGizmo = null;
-      this.clearScaleGizmo(this.scaleGizmo); // Clear the scale gizmo
+      this.clearScaleGizmo(this.scaleGizmo);
     }
   }
 
@@ -155,7 +155,7 @@ export class BasicScene {
     box.material = material;
     box2.material = material;
     ground.material = secondMaterial;
-    // create GizmoManager instance and set usePointerToAttachGizmos to true
+
     const gizmoManager = new GizmoManager(scene);
     gizmoManager.usePointerToAttachGizmos = true;
     scene.onPointerDown = (evt, pickResult) => {
@@ -164,11 +164,11 @@ export class BasicScene {
         pickResult.pickedMesh instanceof AbstractMesh
       ) {
         this.selectMesh(pickResult.pickedMesh);
-        // create RotationGizmo instance and attach it to the selected mesh
+
         const utilityLayerRotate = new UtilityLayerRenderer(scene);
         const rotationGizmo = new RotationGizmo(utilityLayerRotate);
         rotationGizmo.attachedMesh = this.selectedMesh;
-        // create ScalingGizmo instance and attach it to the selected mesh
+
         const utilityLayerScale = new UtilityLayerRenderer(scene);
         const scalingGizmo = new ScaleGizmo(utilityLayerScale);
         scalingGizmo.attachedMesh = this.selectedMesh;
@@ -187,12 +187,10 @@ export class BasicScene {
       this.selectedMesh = mesh;
       mesh.material = this.selectionMaterial;
 
-      // create ScaleGizmo instance and attach it to the selected mesh
       const utilityLayer = new UtilityLayerRenderer(this.scene);
       const scaleGizmo = new ScaleGizmo(utilityLayer);
       scaleGizmo.attachedMesh = mesh;
 
-      // create TranslationGizmo instance and attach it to the selected mesh
       const utilityLayerTranslate = new UtilityLayerRenderer(this.scene);
       const translationGizmo = new PositionGizmo(utilityLayerTranslate);
       translationGizmo.attachedMesh = mesh;
