@@ -4,7 +4,7 @@
 
 <script setup>
 import { onMounted } from "@vue/runtime-core";
-import { BasicScene } from 'src/scenes/MyFirstScene.ts';
+import { BasicScene } from 'src/scenes/MirLocationEditor.ts';
 
 onMounted(() => {
   const canvas = document.querySelector("canvas");

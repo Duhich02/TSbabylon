@@ -23,7 +23,6 @@
 
       <q-drawer
         side="right"
-        v-model="drawerRight"
         show-if-above
         bordered
         :width="200"
@@ -38,7 +37,6 @@
       </q-drawer>
 
       <q-drawer
-        v-model="drawerLeft"
         show-if-above
         :width="270"
         :breakpoint="700"
@@ -46,36 +44,15 @@
       >
         <q-scroll-area class="fit">
           <div class="q-pa-sm">
+
             <div class="toggle-label" @click="toggleLabelInputs = !toggleLabelInputs">
               <q-icon :name="toggleLabelInputs ? 'keyboard_arrow_up' : 'keyboard_arrow_down'" />
               <span>Трансформация</span>
             </div>
-            <div v-if="toggleLabelInputs" class="input-columns">
-
-              <div class="input-column">
-                <div class="q-pb-lg">Расположение</div>
-                <div class="q-pb-lg">Поворот</div>
-                <div class="q-pb-lg">Размер</div>
-              </div>
-
-              <div class="input-column">
-                <q-input class="input-column" filled v-model="locationX" label="X" dense />
-                <q-input class="input-column" filled v-model="rotationX" label="X" dense />
-                <q-input class="input-column" filled v-model="sizeWidth" label="X" dense />
-              </div>
-
-              <div class="input-column">
-                <q-input class="input-column" filled v-model="locationY" label="Y" dense />
-                <q-input class="input-column" filled v-model="rotationY" label="Y" dense />
-                <q-input class="input-column" filled v-model="sizeHeight" label="Y" dense />
-              </div>
-
-              <div class="input-column">
-                <q-input class="input-column" filled v-model="locationZ" label="Z" dense />
-                <q-input class="input-column" filled v-model="rotationZ" label="Z" dense />
-                <q-input class="input-column" filled v-model="sizeHeight" label="Z" dense />
-              </div>
+            <div v-if="toggleLabelInputs">
+              <object-input/>
             </div>
+            <btn-create/>
           </div>
         </q-scroll-area>
       </q-drawer>
@@ -93,31 +70,20 @@
 
 <script setup>
 import BabylonScene from "components/BabylonScene";
-import Button from "src/components/Button.vue"
+import Button from "src/components/ObjectManipulationButtons.vue"
 import { ref } from 'vue'
+import ObjectInput from 'src/components/ObjectsTransformationInput.vue'
+import BtnCreate from "../components/CreatingObjectsButtons.vue";
 
-const drawerLeft = ref(true);
-const drawerRight = ref(true);
 const toggleLabelInputs = ref(true);
-const locationX = ref('');
-const locationY = ref('');
-const locationZ = ref('');
-const rotationX = ref('');
-const rotationY = ref('');
-const rotationZ = ref('');
-const sizeWidth = ref('');
-const sizeHeight = ref('');
+//названия и комментарии
+//названия компонентов
+//вынесить весь функционал роботы с 3д в basicScene
+//добавить сюда мозги кнопок/инпутов
+//разделить на компоненты секции и дроверы
 </script>
 
 <style scoped>
-.input-columns {
-  display: flex;
-}
-
-.input-column {
-  width: 90%;
-  margin-right: 2px;
-}
 
 .toggle-label {
   display: flex;

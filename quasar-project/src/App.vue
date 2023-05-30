@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import MainLayout from "./layouts/MainLayout";
+import MainLayout from "./layouts/MirLocationEditorLayout";
 </script>
