@@ -3,7 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MirLocationEditorLayout.vue'),
+    component: () => import('layouts/MirEditorLayout.vue'),
   },
 
   // Always leave this as last one,

@@ -1,7 +1,8 @@
 {
   "extends": "@quasar/app-webpack/tsconfig-preset",
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "noImplicitAny": false,
   },
   "types": [
     "babylonjs",
