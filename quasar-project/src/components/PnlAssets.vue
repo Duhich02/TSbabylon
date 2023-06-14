@@ -1,8 +1,8 @@
 <template>
   <q-footer class="bg-grey-5" style="height: 150px;">
     <q-toolbar>
-      <ul>
-        <li v-for="(fileName, index) in fileNames" :key="index" @click="addObjectToScene(fileName)">
+      <ul style="display:flex; flex-direction: row-reverse; color: black; flex-wrap: wrap">
+        <li style="padding: 0 25px 0 0;" v-for="(fileName, index) in storeFileName" :key="index" @click="addObjectToScene(fileName)">
           {{ fileName }}
         </li>
       </ul>
@@ -19,26 +19,20 @@ export default {
   data() {
     return {
       store: useStore(),
-      fileNames: [],
-
     }
   },
   computed: {
-    // ...mapGetters({EditorScene: 'GET_EDITORSCENE_INSTANCE'}),
-    // ...mapGetters({fileNames: 'ADD_OBJECT_TO_SCENE'}),
-
-    // doneTodosCount () {
-    //   return this.$store.getters.ADD_OBJECT_TO_SCENE
-    // }
+    ...mapGetters({storeFileName: 'basicSceneInstance/ADD_OBJECT_TO_SCENE'}),
+    ...mapGetters({eSceneInstance: 'basicSceneInstance/GET_EDITORSCENE_INSTANCE'}),
   },
   mounted() {
-    // this.addObjectToScene(filesName)
-    // console.log(filesName)
   },
   methods: {
-    // addObjectToScene(filesName){
-    //   const fileNames = store.commit('ADD_OBJECT_TO_SCENE', filesNames); //mutation
-    },
+    addObjectToScene(fileName) {
+      console.log(fileName)
+      this.eSceneInstance.TSaddObjectToScene(fileName)
+    }
+  },
 }
 
 </script>

@@ -109,7 +109,7 @@ export default {
   },
 
   computed: {
-    // ...mapGetters({EditorScene: 'GET_EDITORSCENE_INSTANCE'}),
+    ...mapGetters({EditorScene: 'basicSceneInstance/GET_EDITORSCENE_INSTANCE'}),
   },
 
   mounted() {

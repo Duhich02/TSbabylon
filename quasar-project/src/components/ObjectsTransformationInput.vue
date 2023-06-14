@@ -8,29 +8,28 @@
       </div>
 
       <div class="input-column">
-        <q-input class="input-column" filled v-model="locationX" @input="" label="X" dense />
-        <q-input class="input-column" filled v-model="rotationX" label="X" dense />
-        <q-input class="input-column" filled v-model="ScaleX" label="X" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'locationX')" filled v-model="locationX" @input="" label="X" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'rotationX')" filled v-model="rotationX" label="X" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'ScaleX')" filled v-model="ScaleX" label="X" dense />
       </div>
 
       <div class="input-column">
-        <q-input class="input-column" filled v-model="locationY" label="Y" dense />
-        <q-input class="input-column" filled v-model="rotationY" label="Y" dense />
-        <q-input class="input-column" filled v-model="ScaleY" label="Y" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'locationY')" filled v-model="locationY" label="Y" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'rotationY')" filled v-model="rotationY" label="Y" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'ScaleY')" filled v-model="ScaleY" label="Y" dense />
       </div>
 
       <div class="input-column">
-        <q-input class="input-column" filled v-model="locationZ" label="Z" dense />
-        <q-input class="input-column" filled v-model="rotationZ" label="Z" dense />
-        <q-input class="input-column" filled v-model="ScaleZ" label="Z" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'locationZ')" filled v-model="locationZ" label="Z" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'rotationZ')" filled v-model="rotationZ" label="Z" dense />
+        <q-input class="input-column" @update:model-value="(arg)=>onChange(arg, 'ScaleZ')" filled v-model="ScaleZ" label="Z" dense />
       </div>
     </div>
   </div>
 </template>
-
+//splice(0, deleteCount.length - 1)
 <script>
 import {ref, watch} from "vue";
-import {event as selectedObject} from "quasar";
 import {mapGetters, useStore} from "vuex";
 export default {
   components: {
@@ -38,67 +37,66 @@ export default {
   data() {
     return {
       store: useStore(),
-      radio: ref("cursor"),
-      locationX: ref(0),
-      locationY: ref(0),
-      locationZ: ref(0),
-      rotationX: ref(0),
-      rotationY: ref(0),
-      rotationZ: ref(0),
-      ScaleX: ref(0),
-      ScaleY: ref(0),
-      ScaleZ: ref(0),
+      locationX: ref(),
+      locationY: ref(),
+      locationZ: ref(),
+      rotationX: ref(),
+      rotationY: ref(),
+      rotationZ: ref(),
+      ScaleX: ref(),
+      ScaleY: ref(),
+      ScaleZ: ref(),
+      changeProp: '',
     }
   },
   computed: {
-    // ...mapGetters({EditorScene: 'GET_EDITORSCENE_INSTANCE'}),
+    ...mapGetters({eSceneInstance: 'basicSceneInstance/GET_EDITORSCENE_INSTANCE'}),
   },
   mounted() {
+    // this.changeProp = this.eSceneInstance.getSelectedObjectProperties(posX, posY, posZ, rotX, rotY, rotZ, ScaleX, ScaleY, ScaleZ)
+  },
+  watch: {
+    changeProp(newVal, oldVal){
 
+    }
+    // this.eSceneInstance.getSelectedObjectProperties(this.locationX, this.locationY)
+    // console.log(this.eSceneInstance.getSelectedObjectProperties(this.locationX))
   },
   methods: {
-    // const locationX = ref(0);
-    // const locationY = ref(0);
-    // const locationZ = ref(0);
-    // const rotationX = ref(0);
-    // const rotationY = ref(0);
-    // const rotationZ = ref(0);
-    // const ScaleX = ref(0);
-    // const ScaleY = ref(0);
-    // const ScaleZ = ref(0);
+    onChange(arc, type){
+      switch (type){
+        case 'locationX':
+          this.eSceneInstance.changePositionX(arc)
+          break
+        case 'locationY':
+          this.eSceneInstance.changePositionY(arc)
+          break
+        case 'locationZ':
+          this.eSceneInstance.changePositionZ(arc)
+          break
+        case 'rotationX':
+          this.eSceneInstance.changeRotationX(arc)
+          break
+        case 'rotationY':
+          this.eSceneInstance.changeRotationY(arc)
+          break
+        case 'rotationZ':
+          this.eSceneInstance.changeRotationZ(arc)
+          break
+        case 'ScaleX':
+          this.eSceneInstance.changeScaleX(arc)
+          break
+        case 'ScaleY':
+          this.eSceneInstance.changeScaleY(arc)
+          break
+        case 'ScaleZ':
+          this.eSceneInstance.changeScaleZ(arc)
+          break
+      }
+    }
   },
 }
-
-
-
 //todo lock ес будут проблемы
-// watch(locationX, (value) => {
-//   selectedObject.position.x = parseFloat(value);
-// });
-// watch(locationY, (value) => {
-//   selectedObject.position.y = parseFloat(value);
-// });
-// watch(locationZ, (value) => {
-//   selectedObject.position.z = parseFloat(value);
-// });
-// watch(rotationX, (value) => {
-//   selectedObject.position.x = parseFloat(value);
-// });
-// watch(rotationY, (value) => {
-//   selectedObject.position.y = parseFloat(value);
-// });
-// watch(rotationZ, (value) => {
-//   selectedObject.position.z = parseFloat(value);
-// });
-// watch(ScaleX, (value) => {
-//   selectedObject.position.x = parseFloat(value);
-// });
-// watch(ScaleY, (value) => {
-//   selectedObject.position.y = parseFloat(value);
-// });
-// watch(ScaleZ, (value) => {
-//   selectedObject.position.z = parseFloat(value);
-// });
 
 </script>
 

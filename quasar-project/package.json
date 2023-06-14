@@ -9,12 +9,12 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@babylonjs/core": "^5.57.0",
     "@babylonjs/gui": "^5.57.0",
     "@babylonjs/inspector": "^5.57.0",
     "@quasar/extras": "^1.0.0",
     "@vue/runtime-core": "^3.2.47",
-    "babylonjs": "^5.57.0",
+    "babylonjs": "^5.57.1",
+    "babylonjs-loaders": "^6.7.0",
     "core-js": "^3.6.5",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
@@ -22,6 +22,8 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
+    "@babylonjs/core": "^5.57.1",
+    "@babylonjs/loaders": "^6.7.0",
     "@quasar/app-webpack": "^3.0.0",
     "@types/node": "^12.20.21",
     "file-loader": "^6.2.0",

@@ -4,7 +4,7 @@
       <pnl-comands/>
       <pnl-inspect/>
       <pnl-objects/>
-      <canvas width="1280" height="750" ref="eCanvas"/>
+      <canvas width="1280" height="700" ref="eCanvas"/>
       <pnl-assets/>
     </q-layout>
   </div>
@@ -37,7 +37,7 @@ export default {
 
   },
   methods: {
-    ...mapActions({setInstanceScene: 'SET_EDITORSCENE_INSTANCE'}),
+    ...mapActions({setInstanceScene: 'basicSceneInstance/SET_EDITORSCENE_INSTANCE'}),
   },
   mounted() {
     this.eScene =  new EditorScene(this.$refs.eCanvas)

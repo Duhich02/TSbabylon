@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-import MainLayout from "./layouts/MirEditorLayout";
+import MainLayout from "./pages/eGamePage";
 </script>

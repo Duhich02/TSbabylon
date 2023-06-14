@@ -13,35 +13,43 @@
 <script>
 import { ref } from 'vue';
 import {mapGetters, useStore} from 'vuex';
-import {EditorScene} from "../scenes/MirEditor";
+// import {EditorScene} from "../scenes/MirEditor";
 
 export default {
+
   components: {
   },
+
   data() {
     return {
       store: useStore(),
-      radio: ref("position"),
-      eScene: EditorScene,
+      radio: ref("cursor"),
+      // eScene: EditorScene,
     }
   },
+
   computed: {
-    ...mapGetters({eSceneInstance: 'GET_EDITORSCENE_INSTANCE'}),
+    ...mapGetters({eSceneInstance: 'basicSceneInstance/GET_EDITORSCENE_INSTANCE'}),
   },
+
   mounted() {
-    this.eScene = this.eSceneInstance
+    console.log(this.eSceneInstance)
+    // this.eScene = this.eSceneInstance
+    console.log(this.store.state.EditorSceneInstance)
   },
+
   methods: {
     enablePositionGizmoBtn() {
-      this.eScene.enablePositionGizmo()
+      console.log(this.eScene)
+      this.eSceneInstance.enablePositionGizmo()
       this.radio = "position";
     },
     enableRotationGizmoBtn() {
-      this.eScene.enableRotationGizmo()
+      this.eSceneInstance.enableRotationGizmo()
       this.radio = "rotation";
     },
     enableScaleGizmoBtn() {
-      this.eScene.enableScaleGizmo()
+      this.eSceneInstance.enableScaleGizmo()
       this.radio = "scaling";
     },
     initializeGizmoManagerBtn() {
